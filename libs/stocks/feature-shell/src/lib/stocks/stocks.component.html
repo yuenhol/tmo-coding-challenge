@@ -18,16 +18,19 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Favorite time period</mat-label>
-    <mat-select formControlName="period">
-      <mat-option
-        *ngFor="let timePeriod of timePeriods"
-        [value]="timePeriod.value"
-      >
-        {{ timePeriod.viewValue }}
-      </mat-option>
-    </mat-select>
+    <input matInput [matDatepicker]="fromDatePicker" [max]="minDate" formControlName="fromDate" placeholder="Choose a starting date"
+           (dateInput)="fromDateEvent($event)" (dateChange)="fromDateEvent($event)">
+    <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #fromDatePicker></mat-datepicker>
   </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="toDatePicker" [max]="minDate" formControlName="toDate" placeholder="Choose an ending date"
+           (dateInput)="toDateEvent($event)" (dateChange)="toDateEvent($event)">
+    <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #toDatePicker></mat-datepicker>
+  </mat-form-field>
+
 
   <button (click)="fetchQuote()" mat-raised-button>Go</button>
 </form>

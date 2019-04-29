@@ -32,6 +32,35 @@
       },
       "schematics": {}
     },
+    "stocks-data-access-symbol-query": {
+      "root": "libs/stocks/data-access-symbol-query",
+      "sourceRoot": "libs/stocks/data-access-symbol-query/src",
+      "projectType": "library",
+      "prefix": "coding-challenge",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/stocks/data-access-symbol-query/tsconfig.lib.json",
+              "libs/stocks/data-access-symbol-query/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/stocks/data-access-symbol-query/jest.config.js",
+            "tsConfig": "libs/stocks/data-access-symbol-query/tsconfig.spec.json",
+            "setupFile": "libs/stocks/data-access-symbol-query/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
     "stocks": {
       "root": "apps/stocks/",
       "sourceRoot": "apps/stocks/src",

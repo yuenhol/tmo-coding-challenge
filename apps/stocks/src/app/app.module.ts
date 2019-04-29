@@ -11,6 +11,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NxModule } from '@nrwl/nx';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
+import { StocksDataAccessSymbolQueryModule } from '@coding-challenge/stocks/data-access-symbol-query';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,6 +38,7 @@ import { environment } from '../environments/environment';
         persist: true
       }
     }),
+    StocksDataAccessSymbolQueryModule,
     StocksDataAccessPriceQueryModule
   ],
   providers: [{ provide: StocksAppConfigToken, useValue: environment }],

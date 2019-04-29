@@ -18,6 +18,9 @@
       "@coding-challenge/stocks/data-access-price-query": [
         "libs/stocks/data-access-price-query/src/index.ts"
       ],
+      "@coding-challenge/stocks/data-access-symbol-query": [
+        "libs/stocks/data-access-symbol-query/src/index.ts"
+      ],
       "@coding-challenge/stocks/feature-shell": [
         "libs/stocks/feature-shell/src/index.ts"
       ],

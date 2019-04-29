@@ -56,7 +56,9 @@
     "hapi": "^18.1.0",
     "lodash": "^4.17.11",
     "lodash-es": "^4.17.11",
+    "node-cache": "^4.2.0",
     "rxjs": "6.3.3",
+    "xmlhttprequest": "^1.8.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

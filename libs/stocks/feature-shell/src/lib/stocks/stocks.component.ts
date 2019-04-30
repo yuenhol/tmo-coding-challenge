@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
+import { debounce } from 'rxjs/operators';
 
 @Component({
   selector: 'coding-challenge-stocks',
@@ -32,7 +33,13 @@ export class StocksComponent implements OnInit, OnDestroy {
       symbol: [null, Validators.required],
       period: [null, Validators.required]
     });
-    this.fetchQuoteSubscription = this.stockPickerForm.valueChanges.subscribe(() => {
+    this.subscribeValueChanges('symbol', 1000);
+    this.subscribeValueChanges('period', 0);
+  }
+
+  subscribeValueChanges(controlName: string, debounceTimer: number): void {
+    this.fetchQuoteSubscription = this.stockPickerForm.controls[controlName].valueChanges.
+    pipe(debounce(() => timer(debounceTimer))).subscribe(() => {
       this.fetchQuote();
     });
   }

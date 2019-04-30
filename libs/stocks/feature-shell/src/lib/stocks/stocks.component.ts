@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
+import { MatDatepickerInputEvent } from '@angular/material';
 
 @Component({
   selector: 'coding-challenge-stocks',
@@ -9,35 +10,50 @@ import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-que
 })
 export class StocksComponent implements OnInit {
   stockPickerForm: FormGroup;
-  symbol: string;
-  period: string;
+  minDate: Date;
 
   quotes$ = this.priceQuery.priceQueries$;
-
-  timePeriods = [
-    { viewValue: 'All available data', value: 'max' },
-    { viewValue: 'Five years', value: '5y' },
-    { viewValue: 'Two years', value: '2y' },
-    { viewValue: 'One year', value: '1y' },
-    { viewValue: 'Year-to-date', value: 'ytd' },
-    { viewValue: 'Six months', value: '6m' },
-    { viewValue: 'Three months', value: '3m' },
-    { viewValue: 'One month', value: '1m' }
-  ];
 
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
     this.stockPickerForm = fb.group({
       symbol: [null, Validators.required],
-      period: [null, Validators.required]
+      fromDate: [null, Validators.required],
+      toDate: [null, Validators.required]
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.minDate = new Date();
+  }
 
   fetchQuote() {
     if (this.stockPickerForm.valid) {
-      const { symbol, period } = this.stockPickerForm.value;
-      this.priceQuery.fetchQuote(symbol, period);
+      const { symbol, fromDate, toDate } = this.stockPickerForm.value;
+      this.priceQuery.fetchQuote(symbol, fromDate, toDate);
     }
   }
+
+  fromDateEvent(event: MatDatepickerInputEvent<Date>): void {
+    if (!this.stockPickerForm.controls['fromDate'].invalid && !this.stockPickerForm.controls['toDate'].invalid) {
+        const fromDate = event.value;
+        const toDate = new Date(this.stockPickerForm.controls['toDate'].value);
+        if (fromDate > toDate) {
+          this.stockPickerForm.controls['fromDate'].setValue(toDate);
+        }
+    }
+  }
+
+  toDateEvent(event: MatDatepickerInputEvent<Date>): void {
+    if (!this.stockPickerForm.controls['fromDate'].invalid && !this.stockPickerForm.controls['toDate'].invalid) {
+      const toDate = event.value;
+      const fromDate = new Date(this.stockPickerForm.controls['fromDate'].value);
+      if (fromDate > toDate) {
+        this.stockPickerForm.controls['toDate'].setValue(fromDate);
+      }
+    }
+  }
+
+
+
+
 }
